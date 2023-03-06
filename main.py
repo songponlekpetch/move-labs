@@ -84,26 +84,26 @@ def preview(btn_move, tree):
 
     id = 0
     for file in files:
-      lab_name = get_lab_name(file)
-      temp_path = f"""{temp_folder}/{lab_name}"""
-      create_temp_folder(temp_path, today_date)
-      copy_file_to_temp_folder(f"""{FOLDERS["source"]}/{file}""", f"""{temp_path}/{today_date}/{file}""")
+        lab_name = get_lab_name(file)
+        temp_path = f"""{temp_folder}/{lab_name}"""
+        create_temp_folder(temp_path, today_date)
+        copy_file_to_temp_folder(f"""{FOLDERS["source"]}/{file}""", f"""{temp_path}/{today_date}/{file}""")
       
-      if lab_name not in main_tree:
-        main_tree[lab_name] = {
-            "id": id,
-            "files": []
-        }
-        tree.insert("", "end", text=lab_name, iid=id)
+        if lab_name not in main_tree:
+            main_tree[lab_name] = {
+                "id": id,
+                "files": []
+            }
+            tree.insert("", "end", text=lab_name, iid=id)
+            id += 1
+
+        main_tree[lab_name]["files"].append(file)
+        tree.insert("", "end", text=file, iid=id)
+        tree.move(id, main_tree[lab_name]["id"], len(main_tree[lab_name]["files"]) - 1)
         id += 1
 
-      main_tree[lab_name]["files"].append(file)
-      tree.insert("", "end", text=file, iid=id)
-      tree.move(id, main_tree[lab_name]["id"], len(main_tree[lab_name]["files"]) - 1)
-      id += 1
-
     for lab in main_tree:
-      tree.item(main_tree[lab]["id"], text=f"""{lab} ({len(main_tree[lab]["files"])})""")
+        tree.item(main_tree[lab]["id"], text=f"""{lab} ({len(main_tree[lab]["files"])})""")
 
     btn_move.configure(state=tk.NORMAL)
 
