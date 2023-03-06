@@ -163,6 +163,7 @@ def main():
     yscrollbar.configure(command=tree.yview)
 
     window.grid_columnconfigure(1, weight=1)
+    window.grid_rowconfigure(1, weight=1)
 
     window.mainloop()
 
